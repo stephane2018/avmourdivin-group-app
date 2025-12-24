@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/register_controller.dart';
 
-class LoginScreen extends ConsumerWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = TextEditingController(text: 'test@test.com');
-    final passwordController = TextEditingController(text: 'password');
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     ref.listen<AsyncValue>(
-      loginControllerProvider,
+      registerControllerProvider,
       (_, state) {
         if (state.hasError && !state.isLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error.toString())),
           );
         }
-         if (state.hasValue && state.value != null) {
+        if (state.hasValue && state.value != null) {
           showDialog(
             context: context,
             builder: (_) => AlertDialog(
               title: const Text('Succès'),
-              content: Text('Bienvenue ${state.value!.name}'),
+              content: Text('Compte créé pour ${state.value!.name}'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -38,15 +38,23 @@ class LoginScreen extends ConsumerWidget {
       },
     );
 
-    final loginState = ref.watch(loginControllerProvider);
+    final registerState = ref.watch(registerControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Connexion')),
+      appBar: AppBar(title: const Text('Inscription')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nom (optionnel)',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
@@ -66,25 +74,21 @@ class LoginScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: loginState.isLoading
+              onPressed: registerState.isLoading
                   ? null
                   : () {
-                      ref.read(loginControllerProvider.notifier).login(
+                      ref.read(registerControllerProvider.notifier).register(
                             emailController.text,
                             passwordController.text,
+                            name: nameController.text,
                           );
                     },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
               ),
-              child: loginState.isLoading
+              child: registerState.isLoading
                   ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text('Se connecter'),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () => context.go('/register'),
-              child: const Text('Pas de compte ? S\'inscrire'),
+                  : const Text('S\'inscrire'),
             ),
           ],
         ),
