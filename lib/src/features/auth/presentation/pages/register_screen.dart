@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../controllers/register_controller.dart';
 
@@ -21,19 +22,7 @@ class RegisterScreen extends ConsumerWidget {
           );
         }
         if (state.hasValue && state.value != null) {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Succès'),
-              content: Text('Compte créé pour ${state.value!.name}'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
+          context.go('/home');
         }
       },
     );

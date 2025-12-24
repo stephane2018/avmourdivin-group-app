@@ -21,19 +21,7 @@ class LoginScreen extends ConsumerWidget {
           );
         }
          if (state.hasValue && state.value != null) {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Succès'),
-              content: Text('Bienvenue ${state.value!.name}'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
+          context.go('/home');
         }
       },
     );
