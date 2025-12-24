@@ -45,6 +45,8 @@ dependencies:
   json_annotation: ^4.9.0
   intl: ^0.20.2
   shimmer: ^3.0.0
+  stream_video_flutter: ^1.2.0
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:

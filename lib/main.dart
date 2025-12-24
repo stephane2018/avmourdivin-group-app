@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'src/core/providers/app_providers.dart';
 import 'package:go_router/go_router.dart';
 import 'src/features/auth/presentation/pages/login_screen.dart';
 import 'src/features/auth/presentation/pages/register_screen.dart';
@@ -49,8 +51,13 @@ final _router = GoRouter(
   ],
 );
 
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+
+  final container = ProviderContainer();
+  await container.read(streamServiceProvider).init();
+
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

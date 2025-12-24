@@ -1,5 +1,6 @@
-import '../../domain/entities/stream_entity.dart';
+import 'package:stream_video_flutter/stream_video_flutter.dart';
 
 abstract class StreamingRemoteDataSource {
-  Future<List<StreamEntity>> getStreams();
+  Future<List<Call>> getCalls();
+  Future<List<Call>> getStreams();
 }

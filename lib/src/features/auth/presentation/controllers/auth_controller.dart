@@ -4,6 +4,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/login.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stream_video_flutter/stream_video_flutter.dart';
+
+import '../../../../core/providers/app_providers.dart';
 import '../../domain/usecases/register.dart';
 import '../providers/auth_providers.dart';
 
@@ -27,7 +31,10 @@ class AuthController extends _$AuthController {
     final result = await loginUseCase(LoginParams(email: email, password: password));
     result.fold(
       (failure) => state = AsyncValue.error(failure, StackTrace.current),
-      (user) => state = AsyncValue.data(user), // Le stream mettra aussi à jour l'état
+      (user) {
+        _connectUserToStream(user);
+        state = AsyncValue.data(user);
+      }
     );
   }
 
@@ -37,11 +44,35 @@ class AuthController extends _$AuthController {
     final result = await registerUseCase(RegisterParams(email: email, password: password, name: name));
     result.fold(
       (failure) => state = AsyncValue.error(failure, StackTrace.current),
-      (user) => state = AsyncValue.data(user),
+      (user) {
+        _connectUserToStream(user);
+        state = AsyncValue.data(user);
+      },
     );
   }
 
+  Future<void> _connectUserToStream(UserEntity userEntity) async {
+    final streamService = ref.read(streamServiceProvider);
+    final devUserId = dotenv.env['STREAM_DEV_USER_ID'];
+    final devUserToken = dotenv.env['STREAM_DEV_USER_TOKEN'];
+
+    if (devUserId == null || devUserToken == null) {
+      throw Exception('Stream Dev User ID or Token not found in .env file');
+    }
+
+    final user = User(
+      info: UserInfo(
+        id: devUserId,
+        name: userEntity.name ?? 'Utilisateur Anonyme',
+        image: userEntity.avatarUrl,
+      ),
+    );
+
+    await streamService.connectUser(user, devUserToken);
+  }
+
   Future<void> logout() async {
+    await ref.read(streamServiceProvider).disconnectUser();
     await ref.read(authRepositoryProvider).logout();
     state = const AsyncValue.data(null);
   }

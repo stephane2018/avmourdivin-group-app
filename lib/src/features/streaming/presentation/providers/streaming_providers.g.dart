@@ -55,7 +55,7 @@ final class StreamingRemoteDataSourceProvider
 }
 
 String _$streamingRemoteDataSourceHash() =>
-    r'98d65015507ba986e5d66bf78a64b8ee220f2b71';
+    r'ad764d7d78ccf19fa7d0e69bbe40f1268bc64a5a';
 
 @ProviderFor(streamingRepository)
 const streamingRepositoryProvider = StreamingRepositoryProvider._();

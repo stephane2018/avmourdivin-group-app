@@ -4,6 +4,7 @@ part 'user_entity.freezed.dart';
 part 'user_entity.g.dart';
 
 @freezed
+// ignore: non_abstract_class_inherits_abstract_member
 class UserEntity with _$UserEntity {
   const factory UserEntity({
     required String id,

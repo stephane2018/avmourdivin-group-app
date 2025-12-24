@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:stream_video_flutter/stream_video_flutter.dart' hide Failure;
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/stream_entity.dart';
@@ -11,11 +12,23 @@ class StreamingRepositoryImpl implements StreamingRepository {
   StreamingRepositoryImpl({required this.remoteDataSource});
 
   @override
+  Future<Either<Failure, List<StreamEntity>>> getCalls() async {
+    try {
+      final calls = await remoteDataSource.getCalls();
+      final streamEntities = calls.map((call) => StreamEntity.fromCall(call)).toList();
+      return Right(streamEntities);
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, List<StreamEntity>>> getStreams() async {
     try {
-      final remoteStreams = await remoteDataSource.getStreams();
-      return Right(remoteStreams);
-    } on Exception {
+      final streams = await remoteDataSource.getStreams();
+      final streamEntities = streams.map((call) => StreamEntity.fromCall(call)).toList();
+      return Right(streamEntities);
+    } catch (e) {
       return Left(ServerFailure());
     }
   }

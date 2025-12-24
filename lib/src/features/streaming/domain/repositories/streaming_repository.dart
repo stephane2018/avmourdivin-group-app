@@ -5,4 +5,5 @@ import '../entities/stream_entity.dart';
 
 abstract class StreamingRepository {
   Future<Either<Failure, List<StreamEntity>>> getStreams();
+  Future<Either<Failure, List<StreamEntity>>> getCalls();
 }
