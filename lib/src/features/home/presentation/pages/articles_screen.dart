@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../blog/presentation/controllers/articles_controller.dart';
 import '../../../blog/presentation/widgets/article_card.dart';
+import '../../../blog/presentation/widgets/article_card_skeleton.dart';
 
 class ArticlesScreen extends ConsumerWidget {
   const ArticlesScreen({super.key});
@@ -12,6 +14,10 @@ class ArticlesScreen extends ConsumerWidget {
     final articlesState = ref.watch(articlesControllerProvider);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push('/create-article'),
+        child: const Icon(Icons.add),
+      ),
       body: articlesState.when(
         data: (articles) => ListView.builder(
           itemCount: articles.length,
@@ -20,7 +26,10 @@ class ArticlesScreen extends ConsumerWidget {
             return ArticleCard(article: article);
           },
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView.builder(
+          itemCount: 5,
+          itemBuilder: (context, index) => const ArticleCardSkeleton(),
+        ),
         error: (error, stackTrace) => Center(
           child: Text('Erreur: ${error.toString()}'),
         ),

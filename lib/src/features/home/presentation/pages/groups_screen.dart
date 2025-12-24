@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../groups/presentation/controllers/groups_controller.dart';
 import '../../../groups/presentation/widgets/group_card.dart';
+import '../../../groups/presentation/widgets/group_card_skeleton.dart';
 
 class GroupsScreen extends ConsumerWidget {
   const GroupsScreen({super.key});
@@ -20,7 +21,10 @@ class GroupsScreen extends ConsumerWidget {
             return GroupCard(group: group);
           },
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView.builder(
+          itemCount: 5,
+          itemBuilder: (context, index) => const GroupCardSkeleton(),
+        ),
         error: (error, stackTrace) => Center(
           child: Text('Erreur: ${error.toString()}'),
         ),

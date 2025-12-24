@@ -139,3 +139,45 @@ final class GetArticlesUseCaseProvider
 
 String _$getArticlesUseCaseHash() =>
     r'4a9216e5b587ac2f5faba232f2692ca305ed8cae';
+
+@ProviderFor(createArticleUseCase)
+const createArticleUseCaseProvider = CreateArticleUseCaseProvider._();
+
+final class CreateArticleUseCaseProvider
+    extends $FunctionalProvider<CreateArticle, CreateArticle, CreateArticle>
+    with $Provider<CreateArticle> {
+  const CreateArticleUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'createArticleUseCaseProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$createArticleUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<CreateArticle> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  CreateArticle create(Ref ref) {
+    return createArticleUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CreateArticle value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CreateArticle>(value),
+    );
+  }
+}
+
+String _$createArticleUseCaseHash() =>
+    r'8c5bf428bfacbd1132b5cf889281b513f16f1c83';
