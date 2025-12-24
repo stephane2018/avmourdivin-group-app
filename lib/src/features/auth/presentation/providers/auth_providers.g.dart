@@ -55,7 +55,7 @@ final class AuthRemoteDataSourceProvider
 }
 
 String _$authRemoteDataSourceHash() =>
-    r'2dd4f858cd8070ab038dd7df918f9f31f4cde861';
+    r'b6fcc19981fe0a74c63dabb6baf792483e312a14';
 
 @ProviderFor(authRepository)
 const authRepositoryProvider = AuthRepositoryProvider._();
@@ -96,7 +96,7 @@ final class AuthRepositoryProvider
   }
 }
 
-String _$authRepositoryHash() => r'a4d14c8e1f786cad9e12d992139d6a30d772d8fa';
+String _$authRepositoryHash() => r'887ee955920b116c6cc44a7c93ace4301db5f00e';
 
 @ProviderFor(loginUseCase)
 const loginUseCaseProvider = LoginUseCaseProvider._();
@@ -137,7 +137,7 @@ final class LoginUseCaseProvider
   }
 }
 
-String _$loginUseCaseHash() => r'88baa78a83434c75c0deff183ee95179da67ca90';
+String _$loginUseCaseHash() => r'8c0e6fea199878348bdab6f64b4ba501964e98be';
 
 @ProviderFor(registerUseCase)
 const registerUseCaseProvider = RegisterUseCaseProvider._();
@@ -178,4 +178,4 @@ final class RegisterUseCaseProvider
   }
 }
 
-String _$registerUseCaseHash() => r'f77358ec06b140af7f5cc64acac139a55454de5b';
+String _$registerUseCaseHash() => r'f8d056e18faa007ab7c32fb2b8cae6bde0ced20e';

@@ -10,23 +10,23 @@ import '../../domain/usecases/register.dart';
 part 'auth_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-AuthRemoteDataSource authRemoteDataSource(AuthRemoteDataSourceRef ref) {
+AuthRemoteDataSource authRemoteDataSource(Ref ref) {
   return AuthRemoteDataSourceImpl();
 }
 
 @Riverpod(keepAlive: true)
-AuthRepository authRepository(AuthRepositoryRef ref) {
+AuthRepository authRepository(Ref ref) {
   return AuthRepositoryImpl(
     remoteDataSource: ref.watch(authRemoteDataSourceProvider),
   );
 }
 
 @Riverpod(keepAlive: true)
-Login loginUseCase(LoginUseCaseRef ref) {
+Login loginUseCase(Ref ref) {
   return Login(ref.watch(authRepositoryProvider));
 }
 
 @Riverpod(keepAlive: true)
-Register registerUseCase(RegisterUseCaseRef ref) {
+Register registerUseCase(Ref ref) {
   return Register(ref.watch(authRepositoryProvider));
 }

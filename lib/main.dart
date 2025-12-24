@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'src/features/auth/presentation/pages/login_screen.dart';
 
 // Pour l'instant, nous définissons une page d'accueil simple.
 // Plus tard, cela sera remplacé par notre système de routage complet.
@@ -8,7 +9,7 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const OnboardingScreen(),
+      builder: (context, state) => const LoginScreen(),
     ),
   ],
 );
@@ -32,19 +33,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Écran de démarrage factice pour l'instant
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bienvenue'),
-      ),
-      body: const Center(
-        child: Text('Page d\'accueil/Onboarding'),
-      ),
-    );
-  }
-}
