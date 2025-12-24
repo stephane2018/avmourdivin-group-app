@@ -44,9 +44,5 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Stream<UserEntity?> get user {
-    // Pour l'instant, nous n'implémentons pas le stream d'utilisateur.
-    // Cela sera fait avec une source de données locale ou un service d'authentification réel.
-    return Stream.value(null);
-  }
+  Stream<UserEntity?> get user => remoteDataSource.user;
 }

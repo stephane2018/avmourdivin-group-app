@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/auth_controller.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -13,7 +13,7 @@ class LoginScreen extends ConsumerWidget {
     final passwordController = TextEditingController(text: 'password');
 
     ref.listen<AsyncValue>(
-      loginControllerProvider,
+      authControllerProvider,
       (_, state) {
         if (state.hasError && !state.isLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -26,7 +26,7 @@ class LoginScreen extends ConsumerWidget {
       },
     );
 
-    final loginState = ref.watch(loginControllerProvider);
+    final loginState = ref.watch(authControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Connexion')),
@@ -57,7 +57,7 @@ class LoginScreen extends ConsumerWidget {
               onPressed: loginState.isLoading
                   ? null
                   : () {
-                      ref.read(loginControllerProvider.notifier).login(
+                      ref.read(authControllerProvider.notifier).login(
                             emailController.text,
                             passwordController.text,
                           );

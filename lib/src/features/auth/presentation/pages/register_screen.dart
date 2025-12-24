@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../controllers/register_controller.dart';
+import '../controllers/auth_controller.dart';
 
 class RegisterScreen extends ConsumerWidget {
   const RegisterScreen({super.key});
@@ -14,7 +14,7 @@ class RegisterScreen extends ConsumerWidget {
     final passwordController = TextEditingController();
 
     ref.listen<AsyncValue>(
-      registerControllerProvider,
+      authControllerProvider,
       (_, state) {
         if (state.hasError && !state.isLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -27,7 +27,7 @@ class RegisterScreen extends ConsumerWidget {
       },
     );
 
-    final registerState = ref.watch(registerControllerProvider);
+    final registerState = ref.watch(authControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Inscription')),
@@ -66,7 +66,7 @@ class RegisterScreen extends ConsumerWidget {
               onPressed: registerState.isLoading
                   ? null
                   : () {
-                      ref.read(registerControllerProvider.notifier).register(
+                      ref.read(authControllerProvider.notifier).register(
                             emailController.text,
                             passwordController.text,
                             name: nameController.text,
