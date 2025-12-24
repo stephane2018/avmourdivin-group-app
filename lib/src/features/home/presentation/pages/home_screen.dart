@@ -6,6 +6,7 @@ import 'feed_screen.dart';
 import 'followers_screen.dart';
 import 'groups_screen.dart';
 import 'profile_screen.dart';
+import '../../../streaming/presentation/pages/live_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +23,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const ArticlesScreen(),
     const GroupsScreen(),
     const FollowersScreen(),
+    const LiveScreen(),
     const ProfileScreen(),
   ];
 
@@ -66,6 +68,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.live_tv),
+            label: 'Live',
           ),
         ],
       ),
