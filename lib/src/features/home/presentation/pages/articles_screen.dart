@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../blog/presentation/controllers/articles_controller.dart';
 import '../../../blog/presentation/widgets/article_card.dart';
 import '../../../blog/presentation/widgets/article_card_skeleton.dart';
+import '../../../../shared/presentation/widgets/error_display.dart';
 
 class ArticlesScreen extends ConsumerWidget {
   const ArticlesScreen({super.key});
@@ -30,8 +31,9 @@ class ArticlesScreen extends ConsumerWidget {
           itemCount: 5,
           itemBuilder: (context, index) => const ArticleCardSkeleton(),
         ),
-        error: (error, stackTrace) => Center(
-          child: Text('Erreur: ${error.toString()}'),
+        error: (error, stackTrace) => ErrorDisplay(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(articlesControllerProvider),
         ),
       ),
     );

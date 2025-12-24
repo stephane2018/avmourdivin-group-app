@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../groups/presentation/controllers/groups_controller.dart';
 import '../../../groups/presentation/widgets/group_card.dart';
 import '../../../groups/presentation/widgets/group_card_skeleton.dart';
+import '../../../../shared/presentation/widgets/error_display.dart';
 
 class GroupsScreen extends ConsumerWidget {
   const GroupsScreen({super.key});
@@ -25,8 +26,9 @@ class GroupsScreen extends ConsumerWidget {
           itemCount: 5,
           itemBuilder: (context, index) => const GroupCardSkeleton(),
         ),
-        error: (error, stackTrace) => Center(
-          child: Text('Erreur: ${error.toString()}'),
+        error: (error, stackTrace) => ErrorDisplay(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(groupsControllerProvider),
         ),
       ),
     );

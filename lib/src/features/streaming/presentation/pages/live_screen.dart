@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../controllers/streams_controller.dart';
 import '../widgets/stream_card.dart';
+import '../../../../shared/presentation/widgets/error_display.dart';
 
 class LiveScreen extends ConsumerWidget {
   const LiveScreen({super.key});
@@ -23,8 +24,9 @@ class LiveScreen extends ConsumerWidget {
         // Pour la simplicité, nous utilisons un CircularProgressIndicator ici,
         // mais un squelette similaire à celui des articles pourrait être créé.
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Text('Erreur: ${error.toString()}'),
+        error: (error, stackTrace) => ErrorDisplay(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(streamsControllerProvider),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../../../followers/presentation/controllers/followers_controller.dart';
 import '../../../followers/presentation/widgets/user_tile.dart';
+import '../../../../shared/presentation/widgets/error_display.dart';
 
 class FollowersScreen extends StatelessWidget {
   const FollowersScreen({super.key});
@@ -43,7 +44,10 @@ class _FollowersList extends ConsumerWidget {
         itemBuilder: (context, index) => UserTile(user: users[index]),
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, st) => Center(child: Text(err.toString())),
+      error: (err, st) => ErrorDisplay(
+        message: err.toString(),
+        onRetry: () => ref.invalidate(followersControllerProvider(userId)),
+      ),
     );
   }
 }
@@ -61,7 +65,10 @@ class _FollowingList extends ConsumerWidget {
         itemBuilder: (context, index) => UserTile(user: users[index]),
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, st) => Center(child: Text(err.toString())),
+      error: (err, st) => ErrorDisplay(
+        message: err.toString(),
+        onRetry: () => ref.invalidate(followingControllerProvider(userId)),
+      ),
     );
   }
 }
